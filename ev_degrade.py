@@ -50,6 +50,18 @@ degrade_summary = pd.read_sql(sql_query2, conn)
 degrade_summary['Avg_Decrease_Per_Month'] = degrade_summary['Avg_SoH'] / degrade_summary['Avg_Age_Months']
 print(degrade_summary[['Battery_Type', 'Avg_Decrease_Per_Month']])
 
+#%% what is the distribution of SoH_Percent for each Battery_Type
+sql_query3 = """
+SELECT Battery_Type, SoH_Percent
+FROM ev_degrade
+"""
+soh_data = pd.read_sql(sql_query3, conn)
+plt.figure(figsize=(10, 6))
+sns.boxplot(x='Battery_Type', y='SoH_Percent', data=soh_data)
+plt.title('Distribution of State of Health (SoH) Percent by Battery Type')
+plt.xlabel('Battery Type')
+plt.ylabel('State of Health (SoH) Percent')
+plt.show()
 
 
 
